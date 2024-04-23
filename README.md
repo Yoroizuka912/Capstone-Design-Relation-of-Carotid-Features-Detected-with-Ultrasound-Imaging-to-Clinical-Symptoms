@@ -38,7 +38,7 @@ python application.py
 
 - Go to [http://127.0.0.1:5000](http://127.0.0.1:5000/), you will see a website page like:
 
-![image-20240423181835865](C:\Users\zzy91\AppData\Roaming\Typora\typora-user-images\image-20240423181835865.png)
+![image-20240423181835865](image-20240423181835865.png)
 
 - Push "Choose image" and go to **data/delineated** to choose a delineated image.
 
