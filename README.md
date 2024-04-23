@@ -50,7 +50,7 @@ python application.py
 
 The diagnostic result should be like this:
 
-![image-20240423184904439](C:\Users\zzy91\AppData\Roaming\Typora\typora-user-images\image-20240423184904439.png)
+![image-20240423184904439](image-20240423184904439.png)
 
 # Contributors
 
