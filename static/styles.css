@@ -1,0 +1,247 @@
+html * {
+    font-family: Nunito, sans-serif;
+}
+
+.select-area {
+    background-color: aliceblue; /* This is the color for the middle part of the page */
+    width: 40%; /* Adjust this to change the width of the middle part */
+    min-height: 100vh; /* This makes the middle part at least as tall as the viewport */
+    float: left;
+}
+
+.display-area {
+  background-color: #4CAF50; /* This is the color for the middle part of the page */
+  width: 60%; /* Adjust this to change the width of the middle part */
+  min-height: 100vh; /* This makes the middle part at least as tall as the viewport */
+  float: left;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;  /* Optional: Add some space between elements */
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}
+
+form {
+  margin: 30px auto;
+  width: 70%;
+  height: 70%;
+  padding: 20px;
+  box-shadow: 10px 10px 5px #888888;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+#myButton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+
+#myButton:hover {
+  background-color: #45a049;
+}
+
+.file-label {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+
+.file-label:hover {
+  background-color: #45a049;
+}
+
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+}
+
+.styled-div {
+  background-color: #f8f9fa;  /* A light grey background */
+  border-radius: 5px;  /* Rounded corners */
+  padding: 20px;  /* Some padding */
+  max-width: 700px;  /* Maximum width */
+  margin: 0 auto;  /* Center the div */
+  font-family: Arial, sans-serif;  /* Use a basic, clean font */
+}
+
+.short-text {
+  margin-bottom: 4px;  /* Add some space below each short text */
+  font-size: 14px;  /* A smaller font size */
+  color: #333;  /* Dark grey text */
+}
+
+.long-text {
+  margin-top: 8px;  /* Add some space above the long text */
+  font-size: 16px;  /* A slightly larger font size */
+  color: #666;  /* Medium grey text */
+  line-height: 1.6;  /* Increase the line height for readability */
+}
+
+.title-div {
+  background-color: #007BFF;  /* Blue background color */
+  color: #FFFFFF;  /* White text color */
+  padding: 10px;  /* Padding around the text */
+  text-align: center;  /* Center the text */
+  /*margin-bottom: 20px;  /* Add some space below the title */
+}
+
+.title-div h1 {
+  font-family: 'Arial', sans-serif;  /* Font of the title */
+  font-size: 2em;  /* Size of the title */
+}
+
+#header {
+  background-color: #007BFF;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+}
+
+#logo img {
+  padding: 20px;
+  width: 77px;  /* Adjust as necessary */
+  height: 112px;  /* Adjust as necessary */
+  margin: 0;
+}
+
+#loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;  /* This should be higher than the z-index of any other element on the page */
+}
+
+.spinner {
+  margin: 0 auto;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0)
+  } 40% { 
+    -webkit-transform: scale(1.0)
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  } 40% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+#customAlert {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.alert-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%; 
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-symbol {
+  font-size: 70px; /* adjust as needed */
+  font-weight: lighter;
+  color: red;
+  margin-bottom: 15px; /* space below the error symbol */
+}
+
+#closeButton {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <div class="select-area">
+    <div id="header">
+      <div id="logo">
+          <img src="../static/logo.png" alt="Logo">
+      </div>
+      <div class="title-div">
+        <h1>AI Carotid Plaque Diagnostic Auxiliary Tool</h1>
+      </div>
+    </div>
+
+    <div id="loader" style="display: none;">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+      </div>
+    </div>
+
+    <div id="customAlert" class="alert hidden">
+      <div class="alert-content">
+        <div class="error-symbol">&#9888;</div>  
+        <p id="alertContent"></p>
+        <button id="closeButton">Confirm</button>
+      </div>
+    </div>
+
+    <div style="text-align:left;" class="center">
+      <form id="myForm" class="flex-column">
+        <div>
+          <input type=file id="image" name="image" style="display: none">
+          <label for="image" class="file-label">Choose image</label>
+          <span id="image-name">No image chosen</span>
+        </div>
+
+        <div>
+          <input type=file id="mask" name="mask" style="display: none">
+          <label for="mask" class="file-label">Choose mask</label>
+          <span id="mask-name">No mask chosen</span>
+        </div>
+        
+        <p>Please specify patient's clinical history information:</p>
+        <div>
+          <div>
+            <span>Gender</span>
+            <input type="radio" id="genderChoice1" name="gender" value="male" />
+            <label for="genderChoice1">Male</label>
+      
+            <input type="radio" id="genderChoice2" name="gender" value="female" />
+            <label for="genderChoice2">Female</label>
+          </div>
+
+          <label for="age">Age&nbsp;</label>
+          <input type="number" id="age" name="age" style="width: 35px;"><br>
+
+          <input type="checkbox" id="history1" name="history" value="high_bp">
+          <label for="history1">Hypertension</label><br>
+
+          <input type="checkbox" id="history2" name="history" value="diabetes">
+          <label for="history2">Diabetes</label><br>
+
+          <input type="checkbox" id="history3" name="history" value="high_bl">
+          <label for="history3">Hyperlipidemia</label><br>
+
+          <input type="checkbox" id="history4" name="history" value="smoke">
+          <label for="history4">Smoke</label><br>
+
+          <input type="checkbox" id="history5" name="history" value="alcohol">
+          <label for="history5">Alcohol</label><br>
+
+          <input type="checkbox" id="history6" name="history" value="brain">
+          <label for="history6">Cerebral vascular accident</label><br>
+
+          <input type="checkbox" id="history7" name="history" value="heart">
+          <label for="history7">Myocardial infarction</label>
+        </div>
+        <button id="myButton">Upload</button>
+      </form>
+    </div> 
+  </div>
+
+  <div class="display-area">
+    <div style="text-align:center; margin-top: 30px;">
+      <img id="image_display" style="width:450px; height:350px;" src="../static/image_placeholder.jpg" alt="Image">
+    </div>
+
+    <div class="styled-div">
+      <p class="short-text"><strong>Ultrasound-image-based score</strong>: <span id="cnn-score"></span></p>
+      <p class="short-text"><strong>Clinical-history-based score</strong>: <span id="xgb-score"></span></p>
+      <p class="short-text"><strong>Final score</strong>: <span id="final-score"></span> (Integration of UIS and CHS)</p>
+      <p class="short-text"><strong>Diagnostic result</strong>: <span id="result"></span></p>
+      <p class="long-text"><strong>Interpretation:</strong> Final score >= 0.5: Symptomatic; Final score < 0.5: Asymptomatic.</p>
+      <p class="long-text">The provided auxiliary diagnostic results are intended for reference only and should not substitute professional medical advice. If there are any concerns or queries regarding the diagnostic results, it is imperative to seek counsel and guidance from a professional physician.</p>
+    </div>    
+  </div>
+
+  <script>
+    document.getElementById('image').addEventListener('change', function(e) {
+      var fileName = e.target.files[0].name;
+      document.getElementById('image-name').textContent = 'Image chosen: ' + fileName;
+    });
+
+    document.getElementById('mask').addEventListener('change', function(e) {
+      var fileName = e.target.files[0].name;
+      document.getElementById('mask-name').textContent = 'Mask chosen: ' + fileName;
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+
+  <script>
+    $(document).ready(function(){
+      $("#myButton").click(function(e){
+        e.preventDefault();
+    
+        $("#loader").show();
+    
+        var formData = new FormData($('#myForm')[0]);
+        console.log(formData);
+    
+        $.ajax({
+          url: "/upload",  
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            console.log(response);
+            var data = JSON.parse(response);
+            if (data.code == 200) {
+              document.getElementById("cnn-score").innerHTML = data.cnn_score;
+              document.getElementById("xgb-score").innerHTML = data.xgb_score;
+              if (data.final_score >= 0.5) {
+                  document.getElementById("final-score").style.color = "red";
+              }
+              else {
+                  document.getElementById("final-score").style.color = "green";
+              }
+              document.getElementById("final-score").innerHTML = data.final_score;
+              if (data.result == "Symptomatic") {
+                  document.getElementById("result").style.color = "red";
+              }
+              else {
+                  document.getElementById("result").style.color = "green";
+              }
+              document.getElementById("result").innerHTML = data.result;
+              document.getElementById("image_display").src = data.image_url;
+            }
+            else {
+              console.log(data.msg);
+              // Handle error response
+              // Update the alert content
+              $("#alertContent").text("Error: " + data.msg);
+              // Show the alert
+              $("#customAlert").removeClass("hidden");
+              setTimeout(function(){
+                $("#customAlert").addClass("hidden");
+              }, 3000); // The alert box will fade out after 3 seconds
+            }
+          },
+          complete: function(){
+            $("#loader").hide();
+          }
+        });
+      });
+    });
+
+    $("#closeButton").click(function(){
+      $("#customAlert").addClass("hidden");
+    });
+  </script>
+  
+  
+</body>
+</html>
