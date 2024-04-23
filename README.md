@@ -38,7 +38,7 @@ python application.py
 
 - Go to [http://127.0.0.1:5000](http://127.0.0.1:5000/), you will see a website page like:
 
-![Image text](image-20240423181835865.png)
+![Image text](screenshot_demo1.png)
 
 - Push "Choose image" and go to **data/delineated** to choose a delineated image.
 
@@ -50,7 +50,7 @@ python application.py
 
 The diagnostic result should be like this:
 
-![Image text](image-20240423184904439.png)
+![Image text](screenshot_demo2.png)
 
 # Contributors
 
